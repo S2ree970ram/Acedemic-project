@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: hsl(256, 26%, 21%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .logo .eye {
+            width: 50px;
+            height: 50px;
+            border: 5px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .logo .eye::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+        }
+        .logo .text {
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .logo .text .highlight {
+            color: #fb5b53;
+        }
+        .account-container {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+        .glossy-button {
+            background-color: #4CAF50; 
+            border: none; 
+            color: white; 
+            padding: 8px 18px; 
+            text-align: center; 
+            text-decoration: none; 
+            display: inline-block;
+            font-size: 16px; 
+            margin: 4px 2px;
+            cursor: pointer; 
+            border-radius: 12px; 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .glossy-button a {
+            color: white;
+            text-decoration: none; 
+        }
+        .glossy-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top left, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+            border-radius: 12px;
+            transform: translate(-100%, 0) rotate(-45deg);
+            transition: transform 0.5s;
+        }
+        .glossy-button:hover::before {
+            transform: translate(100%, 0) rotate(-45deg);
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .button-container .glossy-button {
+            flex: 1;
+            margin: 4px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <div class="eye"></div>
+        <div class="text">
+            A <span class="highlight">EYE</span> IRR SP
+        </div>
+    </div>
+    <div class="account-container">
+        <h1>Account</h1>
+        <div id="account-section">
+            <p id="account-info">Welcome, User!</p>
+            <div class="button-container">
+                <button class="glossy-button" onclick="logout()">Logout</button>
+                <a href="Main Page.html" class="glossy-button">Back to Shopping</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function checkLoginStatus() {
+            const loggedIn = JSON.parse(localStorage.getItem('loggedIn')) || false;
+            if (!loggedIn) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        function logout() {
+            localStorage.setItem('loggedIn', JSON.stringify(false));
+            alert('You have been logged out.');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

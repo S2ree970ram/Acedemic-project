@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: hsl(256, 26%, 21%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin-bottom: 50px;
+            animation: fadeIn 5s ease-in-out;
+        }
+
+        .logo .eye {
+            width: 50px;
+            height: 50px;
+            border: 5px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            animation: spin 4s linear infinite;
+        }
+
+        .logo .eye::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .logo .text {
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .logo .text .highlight {
+            color: #fb5b53;
+        }
+
+        .Reg-container {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border: 2px solid #fb5b53;
+            outline: none;
+            background: #444;
+        }
+
+        .glossy-button {
+    background-color: #4CAF50; 
+    border: none; 
+    color: white; 
+    padding: 8px 150px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block;
+    font-size: 16px; 
+    margin: 4px 2px;
+    cursor: pointer; 
+    border-radius: 12px; 
+    position: relative; 
+    overflow: hidden; 
+}
+
+.glossy-button a {
+    color: white;
+    text-decoration: none; 
+}
+
+.glossy-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top left, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    transform: translate(-100%, 0) rotate(-45deg);
+    transition: transform 0.5s;
+}
+
+.glossy-button:hover::before {
+    transform: translate(100%, 0) rotate(-45deg);
+}
+
+        .spinner-box {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .configure-border-1, .configure-border-2 {
+            width: 115px;
+            height: 115px;
+            padding: 3px;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .configure-border-1 {
+            background: #fb5b53;
+            animation: configure-clockwise 3s ease-in-out 0s infinite alternate;
+        }
+
+        .configure-border-2 {
+            background: #fff;
+            transform: rotate(45deg);
+            animation: configure-xclockwise 3s ease-in-out 0s infinite alternate;
+        }
+
+        .configure-core {
+            width: 100%;
+            height: 100%;
+            background-color: #1d2630;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes configure-clockwise {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes configure-xclockwise {
+            0% { transform: rotate(45deg); }
+            100% { transform: rotate(-315deg); }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="logo">
+        <div class="eye"></div>
+        <div class="text">
+            A <span class="highlight">EYE</span> IRR SP
+        </div>
+    </div>
+    <div class="Reg-container">
+        <h1>Registration</h1>
+        <div class="form-group">
+            <label for="First Name">First Name</label>
+            <input type="text" id="firstName" required>
+        </div>
+        <div class="form-group">
+            <label for="Second Name">Second Name</label>
+            <input type="text" id="secondName" required>
+        </div>
+        <div class="form-group">
+            <label for="E-Mail">E-Mail</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+        </div>
+        <button class="glossy-button" onclick="register()">Register</button>
+        <div class="spinner-box" id="spinner">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function register() {
+            document.getElementById('spinner').style.display = 'flex';
+            
+            const firstName = document.getElementById('firstName').value;
+            const secondName = document.getElementById('secondName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+           
+            const user = { firstName, secondName, email, password };
+            localStorage.setItem('user', JSON.stringify(user));
+
+            setTimeout(() => {
+                alert('Registration successful!');
+                window.location.href = 'index.html';
+                document.getElementById('spinner').style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

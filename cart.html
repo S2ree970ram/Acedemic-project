@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: hsl(256, 26%, 21%);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+        font-family: Arial,sans-serif;
+        color: white;
+        margin-bottom: 20px; 
+    }
+    .logo .eye {
+        width: 50px;
+        height: 50px;
+        border: 5px solid white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+    }
+    .logo .eye::before {
+        content: '';
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+    }
+    .logo .text {
+        font-size: 30px;
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+    .logo .text .highlight {
+        color: #fb5b53;
+    }
+    header {
+        text-align: center;
+        font-size: 75px;
+        color: grey;
+        margin-bottom: 20px; 
+    }
+    .cart-container {
+        background: #333;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+    }
+    h1 {
+        text-align: center;
+        color: #fff;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    ul li {
+        background: #444;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+    }
+    .btn, .toggle-btn {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 8px 220px; 
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+        position: relative;
+        overflow: hidden;
+    }
+	
+    .btn a, .toggle-btn a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn::before, .toggle-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top left, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+        border-radius: 12px;
+        transform: translate(-100%, 0) rotate(-45deg);
+        transition: transform 0.5s;
+    }
+
+    .btn:hover::before, .toggle-btn:hover::before {
+        transform: translate(100%, 0) rotate(-45deg);
+    }
+
+    .btn.clear {
+        background-color: #d9534f;
+    }
+
+    .btn.clear:hover {
+        background-color: #c9302c;
+    }
+
+    .payment-container {
+        margin-top: 20px;
+        display: none;
+    }
+
+    .payment-container input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+</style>
+
+</head>
+<body>
+    <div class="logo">
+        <div class="eye"></div>
+        <div class="text">
+            A <span class="highlight">EYE</span> IRR SP
+        </div>
+    </div>
+    <div class="cart-container">
+        <h1>Your Cart</h1>
+        <div id="cart-items">
+            <p>Your cart is empty.</p>
+        </div>
+        <button class="btn" onclick="togglePaymentForm()">Proceed to Checkout</button></br>
+        <button class="btn clear" onclick="clearCart()">Clear All</button></br>
+        <a href="Main Page.html" class="btn">Back to Shopping</a>
+
+        <div class="payment-container" id="payment-container">
+            <h2>Payment Details</h2>
+            <form id="payment-form">
+                <input type="text" id="card-name" name="card-name" placeholder="Cardholder Name" required>
+                <input type="text" id="card-number" name="card-number" placeholder="Card Number" required>
+                <input type="text" id="expiry-date" name="expiry-date" placeholder="Expiry Date (MM/YY)" required>
+                <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
+                <button type="button" class="btn" onclick="processPayment()">Submit Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Your cart is empty.</p>';
+                return;
+            }
+
+            const ul = document.createElement('ul');
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                ul.appendChild(li);
+            });
+            cartItems.appendChild(ul);
+        }
+
+        function togglePaymentForm() {
+            const paymentContainer = document.getElementById('payment-container');
+            paymentContainer.style.display = paymentContainer.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function processPayment() {
+            const name = document.getElementById('card-name').value;
+            const number = document.getElementById('card-number').value;
+            const expiry = document.getElementById('expiry-date').value;
+            const cvv = document.getElementById('cvv').value;
+
+            if (name && number && expiry && cvv) {
+                alert(`Payment processed for ${name}. Thank you for your purchase!`);
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCart();
+                togglePaymentForm();
+            } else {
+                alert('Please fill in all the payment details.');
+            }
+        }
+
+        function clearCart() {
+            if (cart.length === 0) {
+                alert('Your cart is already empty.');
+                return;
+            }
+
+            if (confirm('Are you sure you want to clear all items from your cart?')) {
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCart();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateCart);
+    </script>
+</body>
+</html>
