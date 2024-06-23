@@ -151,8 +151,9 @@
         <div id="cart-items">
             <p>Your cart is empty.</p>
         </div>
-        <button class="btn" onclick="togglePaymentForm()">Proceed to Checkout</button></br>
-        <button class="btn clear" onclick="clearCart()">Clear All</button></br>
+        <h2 id="total-price"></h2>
+        <button class="btn" onclick="togglePaymentForm()">Proceed to Checkout</button><br>
+        <button class="btn clear" onclick="clearCart()">Clear All</button><br>
         <a href="Main Page.html" class="btn">Back to Shopping</a>
 
         <div class="payment-container" id="payment-container">
@@ -173,19 +174,23 @@
         function updateCart() {
             const cartItems = document.getElementById('cart-items');
             cartItems.innerHTML = '';
+            let totalPrice = 0;
 
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p>Your cart is empty.</p>';
+                document.getElementById('total-price').textContent = '';
                 return;
             }
 
             const ul = document.createElement('ul');
             cart.forEach(item => {
                 const li = document.createElement('li');
-                li.textContent = item;
+                li.textContent = `${item.name} - $${item.price}`;
                 ul.appendChild(li);
+                totalPrice += item.price;
             });
             cartItems.appendChild(ul);
+            document.getElementById('total-price').textContent = `Total: $${totalPrice}`;
         }
 
         function togglePaymentForm() {
