@@ -228,24 +228,29 @@
     window.location.href = 'sign up.html';
 }
 
-        function login() {
-            document.getElementById('spinner').style.display = 'flex';
+         function login() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
 
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+    if (!email || !password) {
+        alert('Please fill in both email and password.');
+        return;
+    }
 
-            const user = JSON.parse(localStorage.getItem('user'));
+    document.getElementById('spinner').style.display = 'flex';
 
-            setTimeout(() => {
-                if (user && user.email === email && user.password === password) {
-                    alert('Login successful!');
-                    window.location.href = 'Main Page.html';
-                } else {
-                    alert('Invalid email or password.');
-                    document.getElementById('spinner').style.display = 'none';
-                }
-            }, 2000);
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    setTimeout(() => {
+        if (user && user.email === email && user.password === password) {
+            alert('Login successful!');
+            window.location.href = 'Main Page.html';
+        } else {
+            alert('Invalid email or password.');
+            document.getElementById('spinner').style.display = 'none';
         }
+    }, 2000);
+}
     </script>
 </body>
 </html>
