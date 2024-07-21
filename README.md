@@ -2,8 +2,8 @@
 # WEBSITE NAME IS  : "A EYE IRR SP" 
 YOU can access the web site through : " https://s2ree970ram.github.io/Acedemic-project/ " this link
 
-/*Topic ="E-commerce website"*/
-Technologies Used
+Topic ="E-commerce website"
+# Technologies Used
 1.Html
 2.CSS
 3.Java Script
