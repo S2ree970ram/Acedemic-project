@@ -7,8 +7,9 @@ Topic ="E-commerce website"
 1.Html
 2.CSS
 3.Java Script
-Desinged a web site  using this three languages 
-/**Step by Step access**/
+
+# Step by Step access
+
 1. sign up.html
     -In the sign up page you can fill your deatils to log in ,It consist of first name ,last name, email password
   ![image](https://github.com/S2ree970ram/Acedemic-project/assets/157942734/8aa8a54e-9cf3-4988-aefd-261ae0792040)
