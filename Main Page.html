@@ -519,25 +519,28 @@ footer {
     </div>
 </footer>
 <script>
-function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    if (sidebar.style.left === '-250px') {
-        sidebar.style.left = '0';
-    } else {
-        sidebar.style.left = '-250px';
-    }
-}
- function addToCart(productName, productPrice) {
+ function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.style.left === '-250px') {
+                sidebar.style.left = '0';
+            } else {
+                sidebar.style.left = '-250px';
+            }
+        }
+
+        function addToCart(productName, productPrice) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push({ name: productName, price: productPrice });
             localStorage.setItem('cart', JSON.stringify(cart));
-            alert(`${productName} added to cart!`);
+            alert(`${escapeHtml(productName)} added to cart!`);
         }
- function updateCartCount() {
+
+        function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             document.getElementById('cart').innerText = `Cart (${cart.length})`;
         }
-		 let buyNowProduct = null;
+
+        let buyNowProduct = null;
 
         function buyNow(productName, productPrice) {
             buyNowProduct = { name: productName, price: productPrice };
@@ -551,14 +554,14 @@ function toggleSidebar() {
         }
 
         function processPayment() {
-            const name = document.getElementById('card-name').value;
-            const number = document.getElementById('card-number').value;
-            const expiry = document.getElementById('expiry-date').value;
-            const cvv = document.getElementById('cvv').value;
+            const name = escapeHtml(document.getElementById('card-name').value);
+            const number = escapeHtml(document.getElementById('card-number').value);
+            const expiry = escapeHtml(document.getElementById('expiry-date').value);
+            const cvv = escapeHtml(document.getElementById('cvv').value);
 
             if (name && number && expiry && cvv) {
                 if (buyNowProduct) {
-                    alert(`Payment processed for ${buyNowProduct.name}. Thank you for your purchase!`);
+                    alert(`Payment processed for ${escapeHtml(buyNowProduct.name)}. Thank you for your purchase!`);
                     buyNowProduct = null;
                 } else {
                     alert('Error: No product selected for Buy Now.');
@@ -568,34 +571,47 @@ function toggleSidebar() {
                 alert('Please fill in all the payment details.');
             }
         }
-function searchProducts() {
-    const input = document.getElementById('search-input').value.toLowerCase();
-    const products = document.getElementsByClassName('product');
-    Array.from(products).forEach(product => {
-        const title = product.getElementsByTagName('h2')[0].innerText.toLowerCase();
-        if (title.includes(input)) {
-            product.style.display = 'block';
-        } else {
-            product.style.display = 'none';
+
+        function searchProducts() {
+            const input = escapeHtml(document.getElementById('search-input').value.toLowerCase());
+            const products = document.getElementsByClassName('product');
+            Array.from(products).forEach(product => {
+                const title = product.getElementsByTagName('h2')[0].textContent.toLowerCase();
+                if (title.includes(input)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
         }
-    });
-}
-function login(username, password) {
-    
-    if (username === 'user' && password === 'password') {
-        localStorage.setItem('loggedIn', JSON.stringify(true));
-        alert('Login successful');
-        window.location.href = 'index.html';  
-    } else {
-        alert('Invalid username or password');
-    }
-}
-function checkLoginStatus() {
-    const loggedIn = JSON.parse(localStorage.getItem('loggedIn')) || false;
-    if (!loggedIn) {
-        window.location.href = 'Account.html';
-    }
-}
+
+        function login(username, password) {
+            const sanitizedUsername = escapeHtml(username);
+            const sanitizedPassword = escapeHtml(password);
+
+            if (sanitizedUsername === 'user' && sanitizedPassword === 'password') {
+                localStorage.setItem('loggedIn', JSON.stringify(true));
+                alert('Login successful');
+                window.location.href = 'index.html';
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        function checkLoginStatus() {
+            const loggedIn = JSON.parse(localStorage.getItem('loggedIn')) || false;
+            if (!loggedIn) {
+                window.location.href = 'Account.html';
+            }
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, '&amp;')
+                      .replace(/</g, '&lt;')
+                      .replace(/>/g, '&gt;')
+                      .replace(/"/g, '&quot;')
+                      .replace(/'/g, '&#039;');
+        }
     </script>
 </body>
 </html>
